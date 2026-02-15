@@ -47,7 +47,6 @@ function UserManagement(){
         // console.log(res)
        if(res.status === 200) readUser()
     }
-    // readUser()
 
     useEffect(()=>{
         readUser()
