@@ -6,6 +6,7 @@ function UserManagement(){
 
     let [User , setUser]= useState([])
 
+
     async function  createUser(newUser){
         // setUser(newUser)
         let res = await fetch('http://localhost:3000/users' , {
@@ -17,14 +18,35 @@ function UserManagement(){
         // setUser(body)
         if(res.status === 201) readUser()
     }
+
+
     async function readUser(){
         let res = await fetch('http://localhost:3000/users')
         let data = await res.json()
-        console.log(data)
+        // console.log(data)
         setUser(data)
     }
-    function deleteUser(){}
-    function modifyUser(){}
+
+
+    async function deleteUser(id){
+        // check by ID
+        let res = await fetch(`http://localhost:3000/users/${id}` , {
+            method : "DELETE"
+        })
+        // console.log(res);
+        if(res.status === 200) readUser()
+    }
+
+    async function modifyUser(modifiedUserObj){
+        // console.log(modifiedUserObj)
+        let res = await fetch (`http://localhost:3000/users/${modifiedUserObj.id}`, {
+            method : 'PUT',
+            headers :{ "Content-Type" : "application/json"},
+            body : JSON.stringify(modifiedUserObj)
+        })
+        // console.log(res)
+       if(res.status === 200) readUser()
+    }
     // readUser()
 
     useEffect(()=>{
